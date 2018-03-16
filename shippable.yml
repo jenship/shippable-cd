@@ -28,3 +28,12 @@ jobs:
             - docker push "skylark01/busybox:$VERSION"
             - shipctl post_resource_state my-image versionName $VERSION
       - OUT: my-image
+
+  - name: verify-image
+    type: runSh
+    steps:
+      - IN: my-image
+      - TASK:
+          script:
+            - VERSION=$(shipctl get_resource_version_name my-image)
+            - docker exec skylark01/busybox:$VERSION /bin/sh -c "Hello, World"
