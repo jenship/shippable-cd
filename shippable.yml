@@ -47,3 +47,4 @@ jobs:
           script:
             - VERSION=$(shipctl get_resource_version_name verify-image)
             - echo "Deploying $VERSION"
+            - shipctl post_resource_state deploy-image versionName $VERSION
