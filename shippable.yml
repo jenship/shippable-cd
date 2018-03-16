@@ -1,3 +1,30 @@
 resources:
   - name: jenkins_argon
     type: externalCIServer
+    
+  - name: docker-cli
+    type: cliConfig
+    integration: dockerhub-skylark01
+    
+  - name: my-image
+    type: image
+    integration: dockerhub-skylark01
+    versionTemplate:
+      sourceName: skylark01/busybox
+      versionName: latest
+
+jobs:
+  - name: build-image
+    type: runSh
+    steps:
+      - IN: jenkins-ci
+      - IN: docker-cli
+        switch: off
+      - TASK:
+          script:
+            - VERSION="ci.$BUILD_NUMBER"
+            - docker pull busybox:latest
+            - docker tag busybox:latest "skylark01/busybox:$VERSION"
+            - docker push "skylark01/busybox:$VERSION"
+            - shipctl post_resource_state my-image versionName "ci.$VERSION"
+      - OUT: my-image
