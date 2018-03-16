@@ -22,6 +22,7 @@ jobs:
       - TASK:
           script:
             - VERSION="cd.$BUILD_NUMBER"
+            - echo "Building $VERSION"
             - docker pull busybox:latest
             - docker tag busybox:latest "skylark01/busybox:$VERSION"
             - docker push "skylark01/busybox:$VERSION"
@@ -35,6 +36,7 @@ jobs:
       - TASK:
           script:
             - VERSION=$(shipctl get_resource_version_name my-image)
+            - echo "Verifying $VERSION"
             - docker run skylark01/busybox:$VERSION /bin/sh -c echo "Hello, World"
             - shipctl post_resource_state verify-image versionName $VERSION
             
