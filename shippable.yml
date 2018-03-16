@@ -36,4 +36,4 @@ jobs:
       - TASK:
           script:
             - VERSION=$(shipctl get_resource_version_name my-image)
-            - docker run skylark01/busybox:$VERSION /bin/sh -c "Hello, World"
+            - docker run skylark01/busybox:$VERSION /bin/sh -c echo "Hello, World"
