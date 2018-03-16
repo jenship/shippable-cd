@@ -22,7 +22,7 @@ jobs:
         switch: off
       - TASK:
           script:
-            - VERSION="ci.$BUILD_NUMBER"
+            - VERSION="cd.$BUILD_NUMBER"
             - docker pull busybox:latest
             - docker tag busybox:latest "skylark01/busybox:$VERSION"
             - docker push "skylark01/busybox:$VERSION"
