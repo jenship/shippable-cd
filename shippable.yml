@@ -19,7 +19,6 @@ jobs:
     steps:
       - IN: jenkins-ci
       - IN: docker-cli
-        switch: off
       - TASK:
           script:
             - VERSION="cd.$BUILD_NUMBER"
@@ -37,3 +36,14 @@ jobs:
           script:
             - VERSION=$(shipctl get_resource_version_name my-image)
             - docker run skylark01/busybox:$VERSION /bin/sh -c echo "Hello, World"
+            - shipctl post_resource_state verify-image versionName $VERSION
+            
+  - name: deploy-image
+    type: runSh
+    steps:
+      - IN: verify-image
+        switch: off
+      - TASK:
+          script:
+            - VERSION=$(shipctl get_resource_version_name verify-image)
+            - echo "Deploying $VERSION"
