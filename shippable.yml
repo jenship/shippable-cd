@@ -26,5 +26,5 @@ jobs:
             - docker pull busybox:latest
             - docker tag busybox:latest "skylark01/busybox:$VERSION"
             - docker push "skylark01/busybox:$VERSION"
-            - shipctl post_resource_state my-image versionName "ci.$VERSION"
+            - shipctl post_resource_state my-image versionName $VERSION
       - OUT: my-image
