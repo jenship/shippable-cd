@@ -17,7 +17,7 @@ jobs:
   - name: build-image
     type: runSh
     steps:
-      #- IN: jenkins-ci
+      - IN: jenkins-ci
       - IN: docker-cli
       - TASK:
           script:
