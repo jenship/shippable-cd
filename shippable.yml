@@ -27,6 +27,7 @@ jobs:
             - docker tag busybox:latest "skylark01/busybox:$VERSION"
             - docker push "skylark01/busybox:$VERSION"
             - shipctl post_resource_state my-image versionName $VERSION
+            - sleep 90
       - OUT: my-image
 
   - name: verify-image
